@@ -8,11 +8,12 @@
 #include<mypoint.h>
 #include<fortune.h>
 #include<QPointF>
+#include<QVector>
 
 using namespace std;
 struct seg;
 struct arc;
-static vector<seg*> output;
+static vector<seg*> segmentsOfDiagramVoronoi;
 
 //События в алгоритме.
 struct event {
@@ -28,28 +29,29 @@ struct event {
 //Параболы береговой линии.
 struct arc {
     QPointF p;
-      arc *prev, *next;
-      event *e;
+    arc *prev, *next;
+    event *e;
 
-      seg *s0, *s1;
+    seg *s0, *s1;
 
-      arc(QPointF& pp, arc *a=0, arc *b=0)
-       : p(pp), prev(a), next(b), e(0), s0(0), s1(0) {}
+    arc(QPointF& pp, arc *a=0, arc *b=0)
+        : p(pp), prev(a), next(b), e(0), s0(0), s1(0) {}
 };
 
 //Ребра локуса.
 struct seg {
     QPointF start, end;
     bool done;
-    QPointF vertexA;
-    QPointF vertexB;
+    QVector<QPointF> tow;
 
     seg(QPointF& p)
         : start(p), end(0,0), done(false)
-    {output.push_back(this);}
+    {
+        segmentsOfDiagramVoronoi.push_back(this);}
     seg(QPointF& p, QPointF A, QPointF B)
-        : start(p), end(0,0), done(false), vertexA(A), vertexB(B)
-    {output.push_back(this);}
+        : start(p), end(0,0), done(false)
+    {
+        segmentsOfDiagramVoronoi.push_back(this); tow.push_back(A); tow.push_back(B);}
     void finish(QPointF p) { if (done) return; end = p; done = true; }
 };
 

@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 
+#define PATH "/home/maxfromperek/QtProjects/CoverageAreas/towers.kml"
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
@@ -15,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     f.loadFromFile(this);
     f.startAlgorithm(scene);
     f.printOutput(scene);
-
+    f.loadToFile(PATH);
 }
 
 MainWindow::~MainWindow()

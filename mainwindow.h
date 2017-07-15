@@ -7,6 +7,7 @@
 #include<QGraphicsScene>
 #include<QGraphicsView>
 
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

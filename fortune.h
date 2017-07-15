@@ -8,22 +8,28 @@
 #include<QGraphicsScene>
 #include<QMap>
 #include<cohensutherland.h>
+#include<QMultiMap>
+#include<QLinkedList>
+#include<QFile>
+#include<QTextStream>
 
 //Cтруктура для хранения данных о вышке.
-struct coord{
-    double tX;
-    double tY;
+struct properties{
+    int id;
     int tP;
-    coord(double x, double y, int p)
-        : tX(x), tY(y), tP(p) {}
+    properties()
+        :id(0), tP(0){}
+    properties(int i, int p)
+        : id(i),tP(p) {}
+    properties operator=(const properties& p1){id = p1.id; tP = p1.tP; return *this;}
 };
 
 class Fortune{
     double X0 = 0, X1 = 0, Y0 = 0, Y1 = 0;//Координаты ограничивающей области.
     priority_queue<QPointF,  vector<QPointF>, gt> points; //cобытие точки
     priority_queue<event*, vector<event*>, gt> events; //событие круга
-    QMap<int,coord> towerProperties;//Характеристики вышки.
     arc* wave;//Начало двусвязного списка "береговой линии".
+    QMultiMap<QPointF,properties> towers;//Характеристики вышек.
 public:
     Fortune(){wave = nullptr;}
     void loadFromFile(QWidget* w);//Загружает данные из файла.
@@ -41,7 +47,11 @@ public:
     void clipping(QPointF& a, QPointF& b);//Отсекает отрезки, вышедшие за область.
 
     void finishEdges();
+    void finishCircuit();
+    void addSideOfRect(QVector<QPointF>& A, QVector<QPointF>& B, QPointF& S, QPointF& F);//Добавляет граничные области в диаграму.
     void printOutput(QGraphicsScene* scene);
+    void loadToFile(QString name);
+    double function(double a1, double b1, double a2, double b2, double p1, double p2, double b);
 };
 
 #endif // FORTUNE_H
