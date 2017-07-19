@@ -5,17 +5,15 @@
 #include <queue>
 #include <set>
 #include <math.h>
-#include<mypoint.h>
-#include<fortune.h>
 #include<QPointF>
 #include<QVector>
 
 using namespace std;
 struct seg;
 struct arc;
-static vector<seg*> segmentsOfDiagramVoronoi;
+static QVector<seg*> segmentsOfDiagramVoronoi;//Диаграма Вороного.
 
-//События в алгоритме.
+//События в алгоритме Форчуна.
 struct event {
     double x;
     QPointF p;
@@ -26,7 +24,7 @@ struct event {
         : x(xx), p(pp), a(aa), valid(true) {}
 };
 
-//Параболы береговой линии.
+//Парабола "береговой линии".
 struct arc {
     QPointF p;
     arc *prev, *next;
@@ -38,11 +36,11 @@ struct arc {
         : p(pp), prev(a), next(b), e(0), s0(0), s1(0) {}
 };
 
-//Ребра локуса.
+//Ребра локуса(диаграмы Вороного).
 struct seg {
     QPointF start, end;
     bool done;
-    QVector<QPointF> tow;
+    QVector<QPointF> tow;//Вышки, которые находятся рядом с этим ребром.
 
     seg(QPointF& p)
         : start(p), end(0,0), done(false)

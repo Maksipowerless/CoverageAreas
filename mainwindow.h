@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QQueue>
 #include"fortune.h"
+#include"coverageazimuth.h"
 #include<QGraphicsScene>
 #include<QGraphicsView>
 
